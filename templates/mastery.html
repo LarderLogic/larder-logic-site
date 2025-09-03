@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="tumblr-flow">
+  <div class="tumblr-card">
+    <h1>From Systems to Service &mdash; Let's Master it Together.</h1>
+    <p><em>Mastery isn't about doing more &mdash; it's about doing it smarter. Whether you're running a fine dining room or high volume kitchen, the profits hide in the details: tighter systems, sharper training, menus that pull their weight, and storage that actually makes sense. That's where I come in. I help operators turn chaos into clarity, cut waste without cutting quality, and squeeze every last dollar out of the ingredients, equipment, and people you already have.</em></p>
+    <p>Think of it as mise en place for your entire business.</p>
+  </div>
+  <div class="tumblr-card">
+    <h2>Task Force Leadership (Private Contractor)</h2>
+    <ul>
+      <li>Step in as interim Executive Chef / F&amp;B Director to stabilize kitchens or hotel outlets.</li>
+      <li>Quickly assess labor, costs, and workflows — stabilize within days, not months.</li>
+      <li>Build structure and train teams to sustain after you hand off.</li>
+      <li>Available short-term (weeks) or medium-term (months).</li>
+    </ul>
+  </div>
+  <div class="tumblr-card">
+    <h2>Operations Optimization</h2>
+    <ul>
+      <li>Menu &amp; Recipe Engineering: streamline prep, reduce waste, cut food costs without sacrificing quality.</li>
+      <li>Space &amp; Storage Flow: redesign kitchens, walk-ins, and stations for speed and efficiency.</li>
+      <li>Labor Modeling: align scheduling to occupancy/volume patterns, saving $$ without burning staff.</li>
+      <li>Purchasing Integration: connect culinary and housekeeping or FOH/BOH to leverage volume rebates.</li>
+    </ul>
+  </div>
+  <div class="tumblr-card">
+    <h2>Technology &amp; Software Integration</h2>
+    <ul>
+      <li>Translate SaaS platforms (inventory, POS, GPO, scheduling) into real-world operator workflows.</li>
+      <li>Train teams on usage — no more “we bought it but don’t use it.”</li>
+      <li>Set up dashboards for live food/labor cost tracking.</li>
+      <li>Build custom calculators (Python/Excel) for costing, rebates, and margins.</li>
+    </ul>
+  </div>
+  <div class="tumblr-card">
+    <h2>Procurement &amp; Vendor Relations</h2>
+    <ul>
+      <li>Leverage experience with distributors, brokers, and GPOs (Sysco, US Foods, Foodbuy, etc.).</li>
+      <li>Negotiate rebates, spec gear with lower total cost of ownership.</li>
+      <li>Create perpetual inventory systems tied to purchasing and sales.</li>
+      <li>Standardize vendor-facing recipes for consistency across multi-unit groups.</li>
+    </ul>
+  </div>
+  <div class="tumblr-card">
+    <h2>Training &amp; Development</h2>
+    <ul>
+      <li>Multilingual SOPs and systems (metric + imperial) for consistency across diverse teams.</li>
+      <li>Hands-on teaching style — breaking down complex systems into plain language.</li>
+      <li>Develop leadership pipelines: mentoring sous chefs/managers into strong leaders.</li>
+      <li>Custom workshops (systems thinking, costing, kitchen logic).</li>
+    </ul>
+  </div>
+  <div class="tumblr-card">
+    <h2>Culinary &amp; Concept Consulting</h2>
+    <ul>
+      <li>Help brands with new restaurant openings (NROs) — kitchen design, menu rollout, training.</li>
+      <li>Develop signature dishes and concepts that balance artistry with profitability.</li>
+      <li>Specialize in connecting traditional techniques with modern tech (automation, combi ovens).</li>
+      <li>Align menus with operational reality: technique &gt; trendy ingredients.</li>
+    </ul>
+    <p><strong>All of these can be offered in-person (on-site support) or virtually (systems training, software integration, menu costing, leadership coaching).</strong></p>
+  </div>
+  <div class="tumblr-card">
+    <h2>Contact / Inquiry</h2>
+    <form>
+      <label for="pillar">Service Pillar:</label>
+      <select id="pillar" name="pillar">
+        <option value="operations">Operations Optimization</option>
+        <option value="technology">Technology &amp; Software Integration</option>
+        <option value="procurement">Procurement &amp; Vendor Relations</option>
+        <option value="training">Training &amp; Development</option>
+        <option value="culinary">Culinary &amp; Concept Consulting</option>
+        <option value="general">General Inquiry</option>
+        <option value="taskforce">Task Force Leadership</option>
+      </select>
+      <br><br>
+      <label for="sector">Market Sector:</label>
+      <select id="sector" name="sector">
+        <option value="full_service_hotel">Full Service Hotel</option>
+        <option value="limited_service_hotel">Limited Service Hotel</option>
+        <option value="fine_dining">Fine Dining</option>
+        <option value="casual_dining">Casual Dining</option>
+        <option value="family_dining">Family Dining</option>
+        <option value="quick_service">Quick Service</option>
+        <option value="counter_service">Counter Service</option>
+        <option value="institutional_dining">Institutional Dining</option>
+        <option value="catering">Catering</option>
+        <option value="food_trucks">Food Trucks &amp; Street Vending</option>
+        <option value="supermarket_retail">Supermarket/Retail</option>
+        <option value="commissary">Commissary</option>
+        <option value="other">Other</option>
+      </select>
+      <br><br>
+      <label for="needs">Client Needs:</label>
+      <input type="text" id="needs" name="needs" placeholder="Describe your needs">
+      <br><br>
+      <label for="timeline">Timeline:</label>
+      <input type="text" id="timeline" name="timeline" placeholder="Preferred timeline">
+      <br><br>
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br><br>
+      <button type="submit">Send Inquiry</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

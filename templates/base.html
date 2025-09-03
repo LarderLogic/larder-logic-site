@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title if title else "Larder Logic" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="main-header">
+    <a href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='images/Logo Simple 495x210px Dark BG.png') }}" alt="Larder Logic Logo" class="logo">
+    </a>
+    <nav class="tagline-menu">
+      <a href="{{ url_for('mise') }}">[ Mise ]</a>
+      <a href="{{ url_for('method') }}">[ Method ]</a>
+      <a href="{{ url_for('mastery') }}">[ Mastery ]</a>
+    </nav>
+  </header>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>New Case Study</h2>
+  <form method="POST" action="{{ url_for('admin_save') }}">
+    {{ form.csrf_token }}
+    <label>{{ form.title.label }} {{ form.title() }}</label><br><br>
+    <div id="editor"></div>
+    <input type="hidden" name="content" id="hidden-content">
+    <br>
+    <button type="submit">Save</button>
+  </form>
+
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    var quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['link', 'image'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'header': [1, 2, 3, false] }],
+          ['clean']
+        ]
+      }
+    });
+
+    // Custom image upload handler
+    quill.getModule('toolbar').addHandler('image', function() {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+
+      input.onchange = function() {
+        var file = input.files[0];
+        var formData = new FormData();
+        formData.append('image', file);
+
+        fetch('/admin/upload_image', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+          var range = quill.getSelection();
+          quill.insertEmbed(range.index, 'image', result.url);
+        });
+      };
+    });
+
+    document.querySelector("form").onsubmit = function() {
+      document.querySelector("#hidden-content").value = quill.root.innerHTML;
+    };
+  </script>
+{% endblock %}
