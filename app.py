@@ -50,7 +50,11 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-@app.route("/admin/editor")
+@app.route("/admin_login.html")
+def admin_login():
+    return render_template("admin_login.html")
+
+@app.route("/admin_editor.html", methods=["GET", "POST"])
 @login_required
 def admin_editor():
     form = EditorForm()
