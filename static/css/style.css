@@ -131,10 +131,10 @@ img {
 }
 .tagline-menu {
   display: flex;
-  gap: 2em;
-  flex: 1;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 2em;
 }
 
 .tagline-menu a {
@@ -200,9 +200,7 @@ img {
   }
   .tagline-menu {
     flex-direction: row;
-    gap: 0.5em;
-    justify-content: center;
-    align-items: center;
+    gap: 1em;
   }
   .tagline-menu a {
     font-size: 1em;
