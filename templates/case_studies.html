@@ -2,17 +2,12 @@
 {% block content %}
   <h2>Case Studies</h2>
   <ul>
-    {% for f in files %}
+    {% for file in files %}
       <li>
-        <a href="{{ url_for('case_study', name=f.replace('.html','')) }}">
-          {{ f.replace('_',' ').replace('.html','') }}
-        </a>
-        {% if current_user.is_authenticated %}
-          <form action="{{ url_for('admin_delete', name=f.replace('.html','')) }}" method="post" style="display:inline;">
-            {{ form.csrf_token if form }}
-            <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
-          </form>
-        {% endif %}
+        <a href="{{ url_for('routes.case_study', name=file[:-5]) }}">{{ file[:-5].replace("_", " ") }}</a>
+        <form method="POST" action="{{ url_for('routes.admin_delete', name=file[:-5]) }}">
+          <button type="submit">Delete</button>
+        </form>
       </li>
     {% endfor %}
   </ul>

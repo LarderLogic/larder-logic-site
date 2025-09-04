@@ -24,13 +24,13 @@
 </head>
 <body>
   <header class="main-header">
-    <a href="{{ url_for('index') }}">
+    <a href="{{ url_for('routes.index') }}">
       <img src="{{ url_for('static', filename='images/Logo Simple 495x210px Dark BG.png') }}" alt="Larder Logic Logo" class="logo">
     </a>
     <nav class="tagline-menu">
-      <a href="{{ url_for('mise') }}">[ Mise ]</a>
-      <a href="{{ url_for('method') }}">[ Method ]</a>
-      <a href="{{ url_for('mastery') }}">[ Mastery ]</a>
+      <a href="{{ url_for('routes.mise') }}">[ Mise ]</a>
+      <a href="{{ url_for('routes.method') }}">[ Method ]</a>
+      <a href="{{ url_for('routes.mastery') }}">[ Mastery ]</a>
     </nav>
   </header>
   <main>

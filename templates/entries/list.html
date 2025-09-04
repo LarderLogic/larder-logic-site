@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Articles</h2>
+  <ul>
+    {% for entry in entries %}
+      <li>{{ entry.title }} - {{ entry.content }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
