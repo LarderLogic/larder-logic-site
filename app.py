@@ -1,39 +1,39 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, flash
-from markupsafe import Markup
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from forms.WTForm import LoginForm, EditorForm
-import bleach
-from models import db, Article, Image, Tag, User
-from routes import routes   # <-- import the Blueprint
+from flask import Flask
+from flask_login import LoginManager
+from models import db, User  # import db and User for login manager
+from routes import routes     # import Blueprint
 
-app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "supersecret")
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+def create_app():
+    app = Flask(__name__)
 
-db.init_app(app)  # <-- Only once, right after config
+    # --- Config ---
+    app.secret_key = os.environ.get("SECRET_KEY", "supersecret")
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# --- Flask-Login setup ---
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
+    # --- Init DB ---
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()  # ✅ runs every time so DB isn’t left at 0 bytes
 
-# Remove any hardcoded users dictionary!
+    # --- Flask-Login ---
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = "routes.login"  # blueprint endpoint
 
-# Flask-Login user loader
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    # --- Register Blueprints ---
+    app.register_blueprint(routes)
+
+    return app
 
 
-# Register blueprint
-app.register_blueprint(routes)
-
+# Gunicorn will look for "app"
+app = create_app()
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
-
