@@ -31,7 +31,12 @@
           {% for article in latest_articles %}
             <li>
               <a href="{{ url_for('article.admin_edit_article', id=article.id) }}">{{ article.title }}</a>
-              ({{ article.timestamp.strftime('%Y-%m-%d') }})
+               {% if article.timestamp %}
+                 ({{ article.timestamp.strftime('%Y-%m-%d') }})
+               {% else %}
+                   (No date)
+               {% endif %}   
+
             </li>
           {% endfor %}
         </ul>
