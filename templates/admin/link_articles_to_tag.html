@@ -1,0 +1,19 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Link Articles to Tag: {{ tag.name }}</h2>
+  <form method="POST">
+    <ul>
+      {% for article in articles %}
+        <li>
+          <label>
+            <input type="checkbox" name="article_ids" value="{{ article.id }}"
+              {% if article.id in linked_ids %}checked{% endif %}>
+            {{ article.title }}
+          </label>
+        </li>
+      {% endfor %}
+    </ul>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('tag.admin_list_tags') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

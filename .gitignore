@@ -20,3 +20,5 @@ site.db
 # VSCode
 .vscode/
 
+static/uploads/
+

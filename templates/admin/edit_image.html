@@ -1,0 +1,28 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Edit Image</h2>
+  <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" width="200"><br>
+  <form method="POST">
+    <label>Title:</label>
+    <input type="text" name="title" value="{{ image.title or '' }}"><br>
+    <label>Description:</label>
+    <textarea name="description">{{ image.description or '' }}</textarea><br>
+    <label>Alt Text (required):</label>
+    <input type="text" name="alt_text" value="{{ image.alt_text or '' }}" required><br>
+    <label>Tags:</label>
+    <select name="tags" multiple>
+      {% for tag in tags %}
+        <option value="{{ tag.id }}" {% if tag.id in current_tag_ids %}selected{% endif %}>{{ tag.name }}</option>
+      {% endfor %}
+    </select><br>
+    <label>Linked Article:</label>
+    <select name="article_id">
+      <option value="">None</option>
+      {% for article in articles %}
+        <option value="{{ article.id }}" {% if article.id == current_article_id %}selected{% endif %}>{{ article.title }}</option>
+      {% endfor %}
+    </select><br>
+    <button type="submit">Save Changes</button>
+    <a href="{{ url_for('dashboard.admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

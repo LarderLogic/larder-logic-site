@@ -1,0 +1,19 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Create New Article</h2>
+  <form method="POST">
+    {{ form.csrf_token }}
+    <p>{{ form.title.label }} {{ form.title() }}</p>
+    <p>{{ form.content.label }} {{ form.content()|safe }}</p>
+    <p>{{ form.tags.label }} 
+      <select name="tags" multiple>
+        {% for tag in form.tags.choices %}
+          <option value="{{ tag[0] }}">{{ tag[1] }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <button type="submit">Create</button>
+  </form>
+  {{ ckeditor.load() }}
+  {{ ckeditor.config(name='content') }}
+{% endblock %}

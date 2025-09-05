@@ -1,0 +1,39 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Manage Images</h2>
+  <table class="table">
+    <tr>
+      <th>Thumbnail</th>
+      <th>Filename</th>
+      <th>Linked Article</th>
+      <th>Tags</th>
+      <th>Actions</th>
+    </tr>
+    {% for image in images %}
+    <tr class="admin-row">
+      <td><img src="{{ url_for('static', filename='uploads/' + image.filename) }}" width="100"></td>
+      <td class="admin-name">{{ image.filename }}</td>
+      <td>
+        {% if image.article_id and articles[image.article_id] %}
+          {{ articles[image.article_id].title }}
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% for tag in image.tags %}
+          <span>{{ tag.name }}</span>
+        {% endfor %}
+      </td>
+      <td>
+        <a href="{{ url_for('image.admin_edit_image', id=image.id) }}" class="btn btn-sm btn-orange me-2">Edit</a>
+        <form method="POST" action="{{ url_for('image.admin_delete_image', id=image.id) }}" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
+        </form>
+        <a href="{{ url_for('image.admin_add_tag_to_image', image_id=image.id) }}" class="btn btn-sm btn-secondary ms-2">Add Tags</a>
+        <a href="{{ url_for('image.admin_link_article_to_image', image_id=image.id) }}" class="btn btn-sm btn-secondary ms-2">Link Article</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

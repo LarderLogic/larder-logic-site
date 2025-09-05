@@ -1,0 +1,26 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Link Images to Article: {{ article.title }}</h2>
+  <form method="POST">
+    <label>Sort by:</label>
+    <select name="sort" onchange="this.form.submit()" class="form-select form-select-sm mb-3 w-auto d-inline">
+      <option value="newest" {% if request.args.get('sort') == 'newest' %}selected{% endif %}>Newest</option>
+      <option value="oldest" {% if request.args.get('sort') == 'oldest' %}selected{% endif %}>Oldest</option>
+      <option value="az" {% if request.args.get('sort') == 'az' %}selected{% endif %}>A-Z</option>
+      <option value="za" {% if request.args.get('sort') == 'za' %}selected{% endif %}>Z-A</option>
+    </select>
+    <div class="row">
+      {% for image in images %}
+        <div class="col-md-3 mb-3">
+          <label class="w-100">
+            <input type="checkbox" name="images" value="{{ image.id }}"
+              {% if image.article_id = article.id %}checked{% endif %}>
+            <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" alt="{{ image.alt_text }}" class="img-thumbnail" style="max-width:100px;">
+            <div class="small text-muted">{{ image.filename }}</div>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-sm btn-orange mt-3">Save</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-3 mb-4">
+    <div class="card">
+      <div class="card-header bg-dark text-white">Quick Stats</div>
+      <div class="card-body">
+        <p>Articles: <strong>{{ article_count }}</strong></p>
+        <p>Images: <strong>{{ image_count }}</strong></p>
+        <p>Tags: <strong>{{ tag_count }}</strong></p>
+        <p>New Messages: <strong>{{ new_message_count }}</strong></p>
+      </div>
+    </div>
+    <div class="card mt-4">
+      <div class="card-header bg-secondary text-white">Navigation</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="{{ url_for('article.admin_new_article') }}">New Article</a></li>
+        <li class="list-group-item"><a href="{{ url_for('article.admin_list_articles') }}">Manage Articles</a></li>
+        <li class="list-group-item"><a href="{{ url_for('image.admin_upload_images') }}">Upload Images</a></li>
+        <li class="list-group-item"><a href="{{ url_for('image.admin_list_images') }}">Manage Images</a></li>
+        <li class="list-group-item"><a href="{{ url_for('tag.admin_list_tags') }}">Manage Tags</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-9">
+    <div class="card mb-4">
+      <div class="card-header bg-info text-white">Recent Activity</div>
+      <div class="card-body">
+        <h5>Latest Articles</h5>
+        <ul>
+          {% for article in latest_articles %}
+            <li>
+              <a href="{{ url_for('article.admin_edit_article', id=article.id) }}">{{ article.title }}</a>
+              ({{ article.timestamp.strftime('%Y-%m-%d') }})
+            </li>
+          {% endfor %}
+        </ul>
+        <h5>Latest Images</h5>
+        <ul>
+          {% for image in latest_images %}
+            <li>
+              <a href="{{ url_for('image.admin_edit_image', id=image.id) }}">{{ image.filename }}</a>
+              ({{ image.created_at.strftime('%Y-%m-%d') }})
+            </li>
+          {% endfor %}
+        </ul>
+        <h5>Latest Tags</h5>
+        <ul>
+          {% for tag in tags[:5] %}
+            <li>
+              <a href="{{ url_for('tag.admin_edit_tag', id=tag.id) }}">{{ tag.name }}</a>
+              ({{ tag.created_at.strftime('%Y-%m-%d') }})
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header bg-warning text-dark">Contact Ticker</div>
+      <div class="card-body">
+        <p>{{ new_message_count }} new contact messages since last login.</p>
+        <ul>
+          {% for msg in ticker_messages %}
+            <li>
+              <strong>{{ msg.name }}</strong> ({{ msg.email }}) — {{ msg.message[:50] }}...
+              <form method="POST" action="{{ url_for('contact.admin_review_contact', id=msg.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-success">Mark as Reviewed</button>
+              </form>
+            </li>
+          {% else %}
+            <li>No new contact messages.</li>
+          {% endfor %}
+        </ul>
+        <form method="POST" action="{{ url_for('contact.admin_clear_all_contacts') }}">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Clear all unreviewed messages?');">Clear All</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

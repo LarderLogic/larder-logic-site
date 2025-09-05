@@ -1,0 +1,42 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<h2>Bulk Image Staging</h2>
+{% if pending %}
+  <form method="POST">
+    <div class="row">
+      {% for filename in pending %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="card-img-top" style="max-height:180px;object-fit:contain;">
+            <div class="card-body">
+              <div class="mb-2">
+                <label>Alt Text:</label>
+                <input type="text" name="alt_{{ filename }}" class="form-control" placeholder="Alt text">
+              </div>
+              <div class="mb-2">
+                <label>Existing Tags:</label>
+                <select name="tags_{{ filename }}" multiple class="form-select">
+                  {% for tag in tags %}
+                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-2">
+                <label>New Tags (comma separated):</label>
+                <input type="text" name="new_tags_{{ filename }}" class="form-control" placeholder="tag1, tag2">
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remove_{{ filename }}" id="remove_{{ filename }}">
+                <label class="form-check-label text-danger" for="remove_{{ filename }}">Remove this image</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-orange mt-3">Save All</button>
+  </form>
+{% else %}
+  <div class="alert alert-info">No images staged for tagging.</div>
+{% endif %}
+{% endblock %}

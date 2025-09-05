@@ -1,0 +1,20 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Add Tag "{{ tag.name }}" to Items</h2>
+  <form method="POST">
+    <label>Select Articles:</label>
+    <select name="articles" multiple class="form-select mb-3">
+      {% for article in articles %}
+        <option value="{{ article.id }}" {% if article in tag.articles %}selected{% endif %}>{{ article.title }}</option>
+      {% endfor %}
+    </select>
+    <label>Select Images:</label>
+    <select name="images" multiple class="form-select mb-3">
+      {% for image in images %}
+        <option value="{{ image.id }}" {% if image in tag.images %}selected{% endif %}>{{ image.filename }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-sm btn-orange mt-3">Save</button>
+  </form>
+  <a href="{{ url_for('tag.admin_add_tag_to_items', tag_id=tag.id) }}">Add Tag to Items</a>
+{% endblock %}

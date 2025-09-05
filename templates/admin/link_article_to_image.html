@@ -1,0 +1,14 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Link Article to Image: {{ image.filename }}</h2>
+  <form method="POST">
+    <label>Select Article:</label>
+    <select name="article_id" class="form-select">
+      <option value="">None</option>
+      {% for article in articles %}
+        <option value="{{ article.id }}" {% if image.article_id = article.id %}selected{% endif %}>{{ article.title }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-sm btn-orange mt-3">Save</button>
+  </form>
+{% endblock %}

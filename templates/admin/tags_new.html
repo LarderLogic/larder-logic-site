@@ -1,0 +1,9 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<h2>Add New Tag</h2>
+<form method="POST">
+  {{ form.csrf_token }}
+  <p>{{ form.name.label }} {{ form.name() }}</p>
+  <button type="submit">Add Tag</button>
+</form>
+{% endblock %}

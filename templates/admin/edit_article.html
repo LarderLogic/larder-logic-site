@@ -1,0 +1,24 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Edit Article</h2>
+  <form method="POST">
+    {{ form.csrf_token }}
+    <p>{{ form.title.label }} {{ form.title() }}</p>
+    <p>{{ form.content.label }} {{ form.content()|safe }}</p>
+    <p>{{ form.tags.label }} 
+      <select name="tags" multiple>
+        {% for tag in form.tags.choices %}
+          <option value="{{ tag[0] }}" {% if tag[0] in (form.tags.data or []) %}selected{% endif %}>{{ tag[1] }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p>
+      <label for="new_tags">Add tags (comma separated):</label>
+      <input type="text" name="new_tags" id="new_tags" class="form-control" placeholder="tag1, tag2">
+    </p>
+    <button type="submit">Update</button>
+    <a href="{{ url_for('dashboard.admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+  {{ ckeditor.load() }}
+  {{ ckeditor.config(name='content') }}
+{% endblock %}

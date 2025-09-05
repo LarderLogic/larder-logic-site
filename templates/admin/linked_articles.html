@@ -1,0 +1,14 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Articles linked to tag: {{ tag.name }}</h2>
+  <ul>
+    {% for article in articles %}
+      <li>
+        <a href="{{ url_for('article.admin_edit_article', id=article.id) }}">{{ article.title }}</a>
+      </li>
+    {% else %}
+      <li><em>No articles linked to this tag.</em></li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('tag.admin_list_tags') }}" class="btn btn-secondary">Back to Tags</a>
+{% endblock %}

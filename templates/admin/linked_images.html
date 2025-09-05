@@ -1,0 +1,14 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Images linked to tag: {{ tag.name }}</h2>
+  <ul>
+    {% for image in images %}
+      <li>
+        <a href="{{ url_for('image.admin_edit_image', id=image.id) }}">{{ image.filename }}</a>
+      </li>
+    {% else %}
+      <li><em>No images linked to this tag.</em></li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('tag.admin_list_tags') }}" class="btn btn-secondary">Back to Tags</a>
+{% endblock %}

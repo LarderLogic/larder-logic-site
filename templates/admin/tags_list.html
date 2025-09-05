@@ -1,0 +1,70 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+  <h2>Tags</h2>
+  <form method="POST" class="mb-4">
+    {{ form.csrf_token }}
+    <label>{{ form.name.label }} {{ form.name(maxlength=50) }}</label>
+    <button type="submit" class="btn btn-sm btn-primary ms-2">Add Tag</button>
+  </form>
+  <form method="GET" class="mb-3">
+    <label for="sort" class="me-2">Sort by:</label>
+    <select name="sort" id="sort" class="form-select form-select-sm d-inline w-auto me-2" onchange="this.form.submit()">
+      <option value="az" {% if request.args.get('sort') == 'az' %}selected{% endif %}>A-Z</option>
+      <option value="za" {% if request.args.get('sort') == 'za' %}selected{% endif %}>Z-A</option>
+      <option value="newest" {% if request.args.get('sort') == 'newest' %}selected{% endif %}>Newest-Oldest</option>
+      <option value="oldest" {% if request.args.get('sort') == 'oldest' %}selected{% endif %}>Oldest-Newest</option>
+      <option value="most" {% if request.args.get('sort') == 'most' %}selected{% endif %}>Most Common-Least Common</option>
+      <option value="least" {% if request.args.get('sort') == 'least' %}selected{% endif %}>Least Common-Most Common</option>
+    </select>
+  </form>
+  <style>
+    .tag-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .tag-name {
+      flex: 1;
+      max-width: 50ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-orange {
+      background-color: #E86A33;
+      border-color: #E86A33;
+      color: #fff;
+    }
+    .btn-orange:hover, .btn-orange:focus {
+      background-color: #cf5c24;
+      border-color: #cf5c24;
+      color: #fff;
+    }
+    .tag-row form {
+      margin: 0;
+      display: inline;
+    }
+  </style>
+  <div>
+    {% for tag in tags %}
+      <div class="admin-row">
+        <span class="admin-name" title="{{ tag.name }}">{{ tag.name[:50] }}</span>
+        <a href="{{ url_for('tag.admin_edit_tag', id=tag.id) }}"
+           class="btn btn-sm btn-orange me-2">Edit</a>
+        <form method="POST" action="{{ url_for('tag.admin_delete_tag', id=tag.id) }}">
+          <button type="submit"
+                  class="btn btn-sm btn-danger"
+                  onclick="return confirm('Delete this tag?');">Delete</button>
+        </form>
+        <a href="{{ url_for('tag.admin_link_articles_to_tag', tag_id=tag.id) }}"
+           class="btn btn-sm btn-secondary ms-2">Link Articles</a>
+        <a href="{{ url_for('tag.admin_view_linked_articles', tag_id=tag.id) }}"
+           class="btn btn-sm btn-outline-dark ms-2">View Linked Articles</a>
+        <a href="{{ url_for('tag.admin_view_linked_images', tag_id=tag.id) }}"
+           class="btn btn-sm btn-outline-dark ms-2">View Linked Images</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

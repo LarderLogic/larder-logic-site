@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>{{ title if title else "Larder Logic" }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon.ico/apple-icon-57x57.png') }}">
   <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon.ico/apple-icon-60x60.png') }}">
   <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='favicon.ico/apple-icon-72x72.png') }}">
@@ -13,26 +14,24 @@
   <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='favicon.ico/apple-icon-144x144.png') }}">
   <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='favicon.ico/apple-icon-152x152.png') }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico/apple-icon-180x180.png') }}">
-  <link rel="icon" type="image/png" sizes="192x192"  href="{{ url_for('static', filename='favicon.ico/android-icon-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='favicon.ico/android-icon-192x192.png') }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.ico/favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon.ico/favicon-96x96.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon.ico/favicon-16x16.png') }}">
   <link rel="manifest" href="{{ url_for('static', filename='favicon.ico/manifest.json') }}">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon.ico/ms-icon-144x144.png') }}">
-  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
   <header class="main-header">
-    <a href="{{ url_for('routes.index') }}">
+    <a href="{{ url_for('public.index') }}">
       <img src="{{ url_for('static', filename='images/Logo Simple 495x210px Dark BG.png') }}" alt="Larder Logic Logo" class="logo">
     </a>
     <nav class="tagline-menu">
-      <a href="{{ url_for('routes.mise') }}">[ Mise ]</a>
-      <a href="{{ url_for('routes.method') }}">[ Method ]</a>
-      <a href="{{ url_for('routes.mastery') }}">[ Mastery ]</a>
+      <a href="{{ url_for('public.mise') }}">[ Mise ]</a>
+      <a href="{{ url_for('public.method') }}">[ Method ]</a>
+      <a href="{{ url_for('public.mastery') }}">[ Mastery ]</a>
     </nav>
   </header>
+
   <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -43,7 +42,10 @@
         </ul>
       {% endif %}
     {% endwith %}
+
     {% block content %}{% endblock %}
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
