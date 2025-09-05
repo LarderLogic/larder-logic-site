@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_ckeditor import CKEditor
+from flask_migrate import Migrate
 from models import db, User
 
 
@@ -29,6 +30,7 @@ def create_app():
 
     # --- Init DB ---
     db.init_app(app)
+    migrate = Migrate(app, db)
     with app.app_context():
         db.create_all()
 
