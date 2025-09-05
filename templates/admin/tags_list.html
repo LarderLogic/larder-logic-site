@@ -54,8 +54,8 @@
         <a href="{{ url_for('tag.admin_edit_tag', id=tag.id) }}"
            class="btn btn-sm btn-orange me-2">Edit</a>
         <form method="POST" action="{{ url_for('tag.admin_delete_tag', id=tag.id) }}">
-          <button type="submit"
-                  class="btn btn-sm btn-danger"
+          {{ form.csrf_token }}
+          <button type="submit" class="btn btn-sm btn-danger"
                   onclick="return confirm('Delete this tag?');">Delete</button>
         </form>
         <a href="{{ url_for('tag.admin_link_articles_to_tag', tag_id=tag.id) }}"

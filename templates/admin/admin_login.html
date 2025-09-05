@@ -7,4 +7,7 @@
     <label>{{ form.password.label }} {{ form.password() }}</label><br><br>
     <button type="submit">Login</button>
   </form>
+  <div class="mt-3">
+    <a href="{{ url_for('public.index') }}" class="btn btn-secondary">← Return to Public Site</a>
+  </div>
 {% endblock %}

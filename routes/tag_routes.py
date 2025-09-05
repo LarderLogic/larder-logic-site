@@ -57,12 +57,13 @@ def admin_delete_tag(id):
     flash("Tag deleted!", "success")
     return redirect(url_for('tag.admin_list_tags'))
 
-@tag_bp.route('/admin/tags/<int:tag_id>/add', methods=['POST'])
+@tag_bp.route('/admin/tags/<int:tag_id>/add', methods=['GET', 'POST'])
 @login_required
 def admin_add_tag_to_items(tag_id):
     tag = Tag.query.get_or_404(tag_id)
-    # Logic to add the tag to items
-    flash(f"Tag '{tag.name}' added to items!", "success")
+    if request.method == "POST":
+        # Add logic to link tag to articles/images if needed
+        flash(f"Tag '{tag.name}' added to items!", "success")
     return redirect(url_for('tag.admin_list_tags'))
 
 @tag_bp.route('/admin/tags/<int:tag_id>/link_articles', methods=['GET', 'POST'])

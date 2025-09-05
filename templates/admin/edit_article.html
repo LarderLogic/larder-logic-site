@@ -5,20 +5,48 @@
     {{ form.csrf_token }}
     <p>{{ form.title.label }} {{ form.title() }}</p>
     <p>{{ form.content.label }} {{ form.content()|safe }}</p>
-    <p>{{ form.tags.label }} 
-      <select name="tags" multiple>
-        {% for tag in form.tags.choices %}
-          <option value="{{ tag[0] }}" {% if tag[0] in (form.tags.data or []) %}selected{% endif %}>{{ tag[1] }}</option>
-        {% endfor %}
-      </select>
-    </p>
-    <p>
-      <label for="new_tags">Add tags (comma separated):</label>
-      <input type="text" name="new_tags" id="new_tags" class="form-control" placeholder="tag1, tag2">
-    </p>
+    
+    <!-- Tags multi-select dropdown (only unlinked tags) -->
+    <div style="display: flex; gap: 2em;">
+      <div>
+        <label for="tags">Add Tags</label>
+        <select id="tags" name="tags" multiple>
+          {% for tag in form.tags.choices %}
+            <option value="{{ tag[0] }}">{{ tag[1] }}</option>
+          {% endfor %}
+        </select>
+        <label for="extra_tags">Add tags (comma separated):</label>
+        <input type="text" name="extra_tags" id="extra_tags">
+      </div>
+      <div>
+        <label>Existing Tags</label>
+        <ul style="list-style:none; padding:0;">
+          {% for tag in article.tags %}
+            <li style="display:flex; align-items:center; gap:0.5em;">
+              <span class="badge bg-secondary">{{ tag.name }}</span>
+              <form method="POST" action="{{ url_for('article.admin_remove_tag_from_article', article_id=article.id, tag_id=tag.id) }}" style="display:inline;">
+                <input type="hidden" name="remove_tag" value="1">
+                {{ form.csrf_token }}
+                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
     <button type="submit">Update</button>
     <a href="{{ url_for('dashboard.admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
   </form>
   {{ ckeditor.load() }}
   {{ ckeditor.config(name='content') }}
+  <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
+  <script>
+    // Ensure form.tags.data is populated with article tags if not already set
+    if ({ form.tags.data|tojson }) {
+      {{ form.tags.data|tojson }};
+    } else {
+      {{ form.tags.data|tojson }} = {{ article.tags|map(attribute='id')|list|tojson }};
+    }
+  </script>
 {% endblock %}

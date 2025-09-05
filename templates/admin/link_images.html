@@ -1,0 +1,20 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<h2>Link Images to Article: {{ article.title }}</h2>
+<form method="POST">
+  <div class="row">
+    {% for image in images %}
+      <div class="col-md-3 mb-4 text-center">
+        <img src="{{ url_for('static', filename='uploads/' ~ image.filename) }}" class="img-thumbnail" style="max-width:150px;">
+        <div>
+          <input type="checkbox" name="image_ids" value="{{ image.id }}"
+                 {% if image.id in linked_ids %}checked{% endif %}>
+          <label>{{ image.filename }}</label>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <button type="submit" class="btn btn-primary mt-3">Save Links</button>
+  <a href="{{ url_for('article.admin_list_articles') }}" class="btn btn-secondary mt-3">Cancel</a>
+</form>
+{% endblock %}

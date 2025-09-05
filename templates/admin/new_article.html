@@ -6,14 +6,16 @@
     <p>{{ form.title.label }} {{ form.title() }}</p>
     <p>{{ form.content.label }} {{ form.content()|safe }}</p>
     <p>{{ form.tags.label }} 
-      <select name="tags" multiple>
-        {% for tag in form.tags.choices %}
-          <option value="{{ tag[0] }}">{{ tag[1] }}</option>
-        {% endfor %}
-      </select>
+      <input type="text" id="tags-input" name="tags" class="form-control"
+       placeholder="Type and press Enter..." value="{{ existing_tags|join(', ') }}">
     </p>
+    <div class="mb-3">
+      <label for="extra_tags">Add tags (comma separated):</label>
+      <input type="text" id="extra_tags" name="extra_tags" class="form-control" placeholder="tag1, tag2">
+    </div>
     <button type="submit">Create</button>
   </form>
   {{ ckeditor.load() }}
   {{ ckeditor.config(name='content') }}
+  <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
 {% endblock %}
