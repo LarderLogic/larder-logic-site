@@ -5,6 +5,7 @@
     {% for image in images %}
       <li>
         <a href="{{ url_for('image.admin_edit_image', id=image.id) }}">{{ image.filename }}</a>
+        ({% if image.created_at %}{{ image.created_at.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
       </li>
     {% else %}
       <li><em>No images linked to this tag.</em></li>

@@ -14,7 +14,13 @@
       {% for article in articles %}
       <tr class="admin-row">
         <td class="admin-name">{{ article.title }}</td>
-        <td>{{ article.timestamp.strftime('%Y-%m-%d') }}</td>
+        <td>
+          {% if article.timestamp %}
+            {{ article.timestamp.strftime('%Y-%m-%d') }}
+          {% else %}
+            (No date)
+          {% endif %}
+        </td>
         <td>
           {% if article.tags %}
             {{ article.tags | map(attribute='name') | join(', ') }}

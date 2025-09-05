@@ -8,6 +8,7 @@
       <th>Linked Article</th>
       <th>Tags</th>
       <th>Actions</th>
+      <th>Upload Date</th>
     </tr>
     {% for image in images %}
     <tr class="admin-row">
@@ -32,6 +33,13 @@
         </form>
         <a href="{{ url_for('image.admin_add_tag_to_image', image_id=image.id) }}" class="btn btn-sm btn-secondary ms-2">Add Tags</a>
         <a href="{{ url_for('image.admin_link_article_to_image', image_id=image.id) }}" class="btn btn-sm btn-secondary ms-2">Link Article</a>
+      </td>
+      <td>
+        {% if image.created_at %}
+          {{ image.created_at.strftime('%Y-%m-%d') }}
+        {% else %}
+          (No date)
+        {% endif %}
       </td>
     </tr>
     {% endfor %}

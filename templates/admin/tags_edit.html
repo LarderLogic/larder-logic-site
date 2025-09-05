@@ -14,6 +14,7 @@
     {% for article in articles_with_tag %}
       <li>
         <a href="{{ url_for('article.admin_edit_article', id=article.id) }}">{{ article.title }}</a>
+        ({% if article.timestamp %}{{ article.timestamp.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
       </li>
     {% else %}
       <li><em>No articles linked to this tag.</em></li>
@@ -24,6 +25,7 @@
     {% for image in images_with_tag %}
       <li>
         <a href="{{ url_for('image.admin_edit_image', id=image.id) }}">{{ image.filename }}</a>
+        ({% if image.created_at %}{{ image.created_at.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
       </li>
     {% else %}
       <li><em>No images linked to this tag.</em></li>

@@ -31,12 +31,7 @@
           {% for article in latest_articles %}
             <li>
               <a href="{{ url_for('article.admin_edit_article', id=article.id) }}">{{ article.title }}</a>
-               {% if article.timestamp %}
-                 ({{ article.timestamp.strftime('%Y-%m-%d') }})
-               {% else %}
-                   (No date)
-               {% endif %}   
-
+              ({% if article.timestamp %}{{ article.timestamp.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
             </li>
           {% endfor %}
         </ul>
@@ -45,7 +40,7 @@
           {% for image in latest_images %}
             <li>
               <a href="{{ url_for('image.admin_edit_image', id=image.id) }}">{{ image.filename }}</a>
-              ({{ image.created_at.strftime('%Y-%m-%d') }})
+              ({% if image.created_at %}{{ image.created_at.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
             </li>
           {% endfor %}
         </ul>
@@ -54,7 +49,7 @@
           {% for tag in tags[:5] %}
             <li>
               <a href="{{ url_for('tag.admin_edit_tag', id=tag.id) }}">{{ tag.name }}</a>
-              ({{ tag.created_at.strftime('%Y-%m-%d') }})
+              ({% if tag.created_at %}{{ tag.created_at.strftime('%Y-%m-%d') }}{% else %}(No date){% endif %})
             </li>
           {% endfor %}
         </ul>
